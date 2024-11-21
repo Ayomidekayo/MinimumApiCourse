@@ -1,9 +1,17 @@
-var builder = WebApplication.CreateBuilder(args);
+using Microsoft.EntityFrameworkCore;
+using StudentErollment.Data;
 
+var builder = WebApplication.CreateBuilder(args);
+var con = builder.Configuration.GetConnectionString("stuenroCon");
+builder.Services.AddDbContext<StudentEntrollmentDbcontext>(option =>
+{
+    option.UseSqlServer(con);
+});
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
